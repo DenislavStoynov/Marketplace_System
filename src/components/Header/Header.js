@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { LoggedContext } from "../../ctx/LoggedContext";
+
 const Header = () => {
     const { isLoggedIn } = useContext(LoggedContext);
     return (

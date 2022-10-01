@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 
 const SignUp = ({ userList, setUserList, setDataBase }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    
     const updateUsername = (event) => {
         setUsername(event.target.value.replace(/ /g, ''));
     };
@@ -66,7 +67,7 @@ const SignUp = ({ userList, setUserList, setDataBase }) => {
             <form onSubmit={registerUser}>
                 <input type='text' value={username} placeholder='Enter username...' onChange={updateUsername} />
                 <input type='password' value={password} placeholder='Enter password...' onChange={updatePassword} />
-                <button>Sign Up</button>
+                <button type='submit'>Sign Up</button>
             </form>
         </section>
     );
