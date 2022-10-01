@@ -1,10 +1,12 @@
 import { useContext, useRef, useState, useEffect } from "react";
 import { LoggedContext } from "../../ctx/LoggedContext";
 import { useHistory } from "react-router-dom";
+import Product from "./Products/Product";
 
 const Dashboard = () => {
+    const [products, setProducts] = useState([]);
     const { setIsLoggedIn } = useContext(LoggedContext);
-    const key = localStorage.key(0)
+    const key = localStorage.key(0);
     const user = JSON.parse(localStorage.getItem(key));
     const history = useHistory();
     const productTitle = useRef();
@@ -20,8 +22,20 @@ const Dashboard = () => {
     const getProductsList = async () => {
         const response = await fetch(`https://market-place-31e77-default-rtdb.firebaseio.com/users/${key}.json`);
         const data = await response.json();
+        setProducts(data.products);
         return data.products;
-    }
+    };
+
+    useEffect(() => {
+        const assignProductsToState = async () => {
+            const res = await getProductsList();
+            setProducts(res);
+        };
+
+        (async () => {
+            await assignProductsToState();
+        })();
+    }, [])
 
     const addProduct = async (event) => {
         event.preventDefault();
@@ -47,6 +61,10 @@ const Dashboard = () => {
                 }]
             })
         });
+    };
+
+    const extractProducts = () => {
+        return products.map(product => <Product key={product.id} product={product} />)
     }
 
     return (
@@ -56,6 +74,7 @@ const Dashboard = () => {
             <section style={{ display: 'flex', justifyContent: 'space-around' }}>
                 <div>
                     <h3>Your Products:</h3>
+                    {Array.isArray(products) && extractProducts()}
                 </div>
                 <div>
                     <h3>Add Product:</h3>
