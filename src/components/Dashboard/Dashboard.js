@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import Product from "./Products/Product";
 import DeletePopUp from "./DeletePopUp/DeletePopUp";
 
-const Dashboard = () => {
+const Dashboard = ({setTotalProducts}) => {
     const [popUpIsVisible, setPopUpIsVisible] = useState(false);
     const [productToDelete, setProductToDelete] = useState(null);
     const [products, setProducts] = useState([]);
@@ -64,10 +64,12 @@ const Dashboard = () => {
         });
         const res = await getProductsList();
         setProducts(res);
+        setTotalProducts(prevProducts => [...prevProducts, res[res.length-1]])
     };
 
     const extractProducts = () => {
-        return products.filter(product => product !== null).map(product => <Product key={Math.random()} product={product} setPopUpIsVisible={setPopUpIsVisible} setProductToDelete={setProductToDelete} />);
+        return products
+            .map(product => <Product key={Math.random()} product={product} setPopUpIsVisible={setPopUpIsVisible} setProductToDelete={setProductToDelete} />);
     };
 
     return (
@@ -90,7 +92,7 @@ const Dashboard = () => {
                     </form>
                 </div>
             </section>
-            {popUpIsVisible && <DeletePopUp setPopUpIsVisible={setPopUpIsVisible} productToDelete={productToDelete} localKey={key} products={products} setProducts={setProducts} user={user} />}
+            {popUpIsVisible && <DeletePopUp setPopUpIsVisible={setPopUpIsVisible} productToDelete={productToDelete} localKey={key} products={products} setProducts={setProducts} user={user} setTotalProducts={setTotalProducts}/>}
         </div>
     )
 };

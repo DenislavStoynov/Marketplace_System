@@ -7,12 +7,19 @@ import Login from './components/Login/Login';
 import Homepage from './components/Homepage/Homepage';
 import Dashboard from './components/Dashboard/Dashboard';
 import { LoggedContextProvider } from './ctx/LoggedContext';
+import { TotalProductsContextProvider } from './ctx/TotalProductsContext';
 
 
 function App() {
   const [userList, setUserList] = useState([]);
   const [database, setDataBase] = useState([]);
   const [totalProducts, setTotalProducts] = useState([]);
+
+  // const getAsd = (product) => {
+  //   setTotalProducts(prevProduct => prevProduct.filter(p => p.id !== 0));
+  //   console.log(product);
+  // };
+
   const updateProductsList = (list) => {
     return list.map(item => {
       if (item.products) {
@@ -22,6 +29,7 @@ function App() {
       }
     })
   };
+
   useEffect(() => {
     const initialUserList = async () => {
       const response = await fetch('https://market-place-31e77-default-rtdb.firebaseio.com/users.json');
@@ -29,7 +37,7 @@ function App() {
       setUserList(Object.values(data));
       updateProductsList(Object.values(data));
       setDataBase(data);
-    }
+    };
 
     (async () => {
       await initialUserList();
@@ -57,7 +65,7 @@ function App() {
               <Login userList={userList} database={database} />
             </Route>
             <Route path="/dashboard">
-              <Dashboard />
+              <Dashboard setTotalProducts={setTotalProducts} />
             </Route>
           </Switch>
         </main>
