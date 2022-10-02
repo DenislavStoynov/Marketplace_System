@@ -12,12 +12,20 @@ import { LoggedContextProvider } from './ctx/LoggedContext';
 function App() {
   const [userList, setUserList] = useState([]);
   const [database, setDataBase] = useState([]);
-
+  const [totalProducts, setTotalProducts] = useState([]);
+  const updateProductsList = (list) => {
+    return list.map(item => {
+      return item.products.map(product => {
+        setTotalProducts(prevProduct => [...prevProduct, product])
+      })
+    })
+  };
   useEffect(() => {
     const initialUserList = async () => {
       const response = await fetch('https://market-place-31e77-default-rtdb.firebaseio.com/users.json');
       const data = await response.json();
       setUserList(Object.values(data));
+      updateProductsList(Object.values(data));
       setDataBase(data);
     }
 
@@ -38,7 +46,7 @@ function App() {
               <Redirect to="/homepage" />
             </Route>
             <Route path="/homepage">
-              <Homepage />
+              <Homepage totalProducts={totalProducts} setTotalProducts={setTotalProducts}/>
             </Route>
             <Route path="/signup">
               <SignUp userList={userList} setUserList={setUserList} setDataBase={setDataBase} />

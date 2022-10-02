@@ -23,7 +23,6 @@ const Dashboard = () => {
         const response = await fetch(`https://market-place-31e77-default-rtdb.firebaseio.com/users/${key}.json`);
         const data = await response.json();
         setProducts(data.products);
-        console.log(data.products);
         return data.products;
     };
 
@@ -40,8 +39,6 @@ const Dashboard = () => {
 
     const addProduct = async (event) => {
         event.preventDefault();
-        // const res = await getProductsList();
-        // const productsList = Array.isArray(res) ? res : null;
         await fetch(`https://market-place-31e77-default-rtdb.firebaseio.com/users/${key}.json`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -78,6 +75,7 @@ const Dashboard = () => {
                 <div>
                     <h3>Your Products:</h3>
                     {Array.isArray(products) && extractProducts()}
+                    {!Array.isArray(products) && <p>You have no products yet</p>}
                 </div>
                 <div>
                     <h3>Add Product:</h3>
