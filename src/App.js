@@ -46,7 +46,7 @@ function App() {
               <Redirect to="/homepage" />
             </Route>
             <Route path="/homepage">
-              <Homepage totalProducts={totalProducts} setTotalProducts={setTotalProducts}/>
+              <Homepage totalProducts={totalProducts} setTotalProducts={setTotalProducts} userList={userList} />
             </Route>
             <Route path="/signup">
               <SignUp userList={userList} setUserList={setUserList} setDataBase={setDataBase} />
