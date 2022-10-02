@@ -15,9 +15,11 @@ function App() {
   const [totalProducts, setTotalProducts] = useState([]);
   const updateProductsList = (list) => {
     return list.map(item => {
-      return item.products.map(product => {
-        setTotalProducts(prevProduct => [...prevProduct, product])
-      })
+      if (item.products) {
+        return item.products.map(product => {
+          setTotalProducts(prevProduct => [...prevProduct, product])
+        })
+      }
     })
   };
   useEffect(() => {

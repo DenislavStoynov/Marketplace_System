@@ -56,6 +56,7 @@ const Homepage = ({ userList, totalProducts, setTotalProducts }) => {
             <hr width={55} style={{ border: '1px solid #000' }} />
             <h2>Our Products</h2>
             <input type='text' placeholder='Enter a product...' onChange={updateSearchInput} />
+            {!totalProducts && <p>No products added!</p>}
             {!searchInput && totalProducts.length === 0 && <p>Loading...</p>}
             {totalProducts.length > 0 && <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>{displayProducts()}</div>}
             {searchInput && totalProducts.length === 0 && <p>No results!</p>}

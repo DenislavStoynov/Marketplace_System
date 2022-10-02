@@ -2,8 +2,11 @@ import { useContext, useRef, useState, useEffect } from "react";
 import { LoggedContext } from "../../ctx/LoggedContext";
 import { useHistory } from "react-router-dom";
 import Product from "./Products/Product";
+import DeletePopUp from "./DeletePopUp/DeletePopUp";
 
 const Dashboard = () => {
+    const [popUpIsVisible, setPopUpIsVisible] = useState(false);
+    const [productToDelete, setProductToDelete] = useState(null);
     const [products, setProducts] = useState([]);
     const { setIsLoggedIn } = useContext(LoggedContext);
     const key = localStorage.key(0);
@@ -64,11 +67,11 @@ const Dashboard = () => {
     };
 
     const extractProducts = () => {
-        return products.map(product => <Product key={product.id} product={product} />)
-    }
+        return products.filter(product => product !== null).map(product => <Product key={Math.random()} product={product} setPopUpIsVisible={setPopUpIsVisible} setProductToDelete={setProductToDelete} />);
+    };
 
     return (
-        <div>
+        <div style={{ positon: 'relative' }}>
             <span style={{ fontSize: '29px', fontWeight: 'bold' }}>Welcome to your dashboard, {user.username}!</span>
             <button style={{ marginBottom: 35 }} onClick={logOut}>Logout</button>
             <section style={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -87,6 +90,7 @@ const Dashboard = () => {
                     </form>
                 </div>
             </section>
+            {popUpIsVisible && <DeletePopUp setPopUpIsVisible={setPopUpIsVisible} productToDelete={productToDelete} localKey={key} products={products} setProducts={setProducts} user={user} />}
         </div>
     )
 };
