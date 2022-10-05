@@ -8,12 +8,21 @@ const selectButtonStyles = {
     cursor: 'pointer'
 };
 
-const Product = ({ product, products, setPopUpIsVisible, setProductToDelete, localKey }) => {
-    const [mainImage, setMainImage] = useState(null);
+const Product = ({ product, setProducts, products, setPopUpIsVisible, setProductToDelete, localKey }) => {
     const key = getKeyByValue(products, product);
     const openPopUp = () => {
         setPopUpIsVisible(true);
         setProductToDelete(product);
+    };
+
+    const updateProducts = (result) => {
+        setProducts(prevProducts => {
+            const res = prevProducts.map(x => {
+                if (x.id === product.id) x.images = result;
+                return x;
+            });
+            return [...res];
+        })
     };
 
     const selectImage = (event) => {
@@ -31,17 +40,13 @@ const Product = ({ product, products, setPopUpIsVisible, setProductToDelete, loc
                     images: reader.result
                 })
             });
-            setMainImage(reader.result);
+            updateProducts(reader.result);
         }
     };
 
     function getKeyByValue(object, value) {
         return Object.keys(object).find(key => object[key] === value);
     };
-
-    useEffect(() => {
-        setMainImage(product.images);
-    }, [products, mainImage])
 
     return (
         <div>

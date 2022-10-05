@@ -71,7 +71,7 @@ const Dashboard = ({ setTotalProducts }) => {
 
     const extractProducts = () => {
         return products
-            .map(product => <Product key={Math.random()} product={product} products={products} setPopUpIsVisible={setPopUpIsVisible} setProductToDelete={setProductToDelete} localKey={key} />);
+            .map(product => <Product key={Math.random()} product={product} setProducts={setProducts} products={products} setPopUpIsVisible={setPopUpIsVisible} setProductToDelete={setProductToDelete} localKey={key} />);
     };
 
     return (
