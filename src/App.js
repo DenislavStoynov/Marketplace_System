@@ -7,18 +7,14 @@ import Login from './components/Login/Login';
 import Homepage from './components/Homepage/Homepage';
 import Dashboard from './components/Dashboard/Dashboard';
 import { LoggedContextProvider } from './ctx/LoggedContext';
-import { TotalProductsContextProvider } from './ctx/TotalProductsContext';
-
+import { CartListContextProvider } from './ctx/CartListContext';
+import CartPopUp from './components/CartPopUp/CartPopUp';
 
 function App() {
   const [userList, setUserList] = useState([]);
   const [database, setDataBase] = useState([]);
   const [totalProducts, setTotalProducts] = useState([]);
-
-  // const getAsd = (product) => {
-  //   setTotalProducts(prevProduct => prevProduct.filter(p => p.id !== 0));
-  //   console.log(product);
-  // };
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const updateProductsList = (list) => {
     return list.map(item => {
@@ -45,32 +41,35 @@ function App() {
   }, [])
 
   return (
-    <LoggedContextProvider>
-      <div className="App">
-        <header>
-          <Header />
-        </header>
-        <main>
-          <Switch>
-            <Route path="/" exact>
-              <Redirect to="/homepage" />
-            </Route>
-            <Route path="/homepage">
-              <Homepage totalProducts={totalProducts} setTotalProducts={setTotalProducts} userList={userList} />
-            </Route>
-            <Route path="/signup">
-              <SignUp userList={userList} setUserList={setUserList} setDataBase={setDataBase} />
-            </Route>
-            <Route path="/login">
-              <Login userList={userList} database={database} />
-            </Route>
-            <Route path="/dashboard">
-              <Dashboard setTotalProducts={setTotalProducts} />
-            </Route>
-          </Switch>
-        </main>
-      </div>
-    </LoggedContextProvider>
+    <CartListContextProvider>
+      <LoggedContextProvider>
+        <div className="App">
+          <header>
+            <Header setIsCartOpen={setIsCartOpen} />
+          </header>
+          <main>
+            <Switch>
+              <Route path="/" exact>
+                <Redirect to="/homepage" />
+              </Route>
+              <Route path="/homepage">
+                <Homepage totalProducts={totalProducts} setTotalProducts={setTotalProducts} userList={userList} />
+              </Route>
+              <Route path="/signup">
+                <SignUp userList={userList} setUserList={setUserList} setDataBase={setDataBase} />
+              </Route>
+              <Route path="/login">
+                <Login userList={userList} database={database} />
+              </Route>
+              <Route path="/dashboard">
+                <Dashboard setTotalProducts={setTotalProducts} />
+              </Route>
+            </Switch>
+          </main>
+          {isCartOpen && <CartPopUp setIsCartOpen={setIsCartOpen} />}
+        </div>
+      </LoggedContextProvider>
+    </CartListContextProvider>
   );
 }
 

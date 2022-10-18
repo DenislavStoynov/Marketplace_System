@@ -34,7 +34,6 @@ const Homepage = ({ userList, totalProducts, setTotalProducts }) => {
         const end = productsPerPage * currentPage;
         const start = end - productsPerPage;
         const products = currentPage === pages.length ? totalProducts.slice(start) : totalProducts.slice(start, end);
-        if (searchInput) return products.map(product => <HomepageProduct key={product.id} product={product} />)
         return products.map(product => <HomepageProduct key={product.id} product={product} />);
     };
 
@@ -66,3 +65,7 @@ const Homepage = ({ userList, totalProducts, setTotalProducts }) => {
 };
 
 export default Homepage;
+
+
+
+// if (searchInput) return products.map(product => <HomepageProduct key={product.id} product={product} />)
