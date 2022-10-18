@@ -3,7 +3,7 @@ import { CartListContext } from '../../../ctx/CartListContext';
 import { useContext, useRef } from 'react';
 
 const CartProduct = ({ product }) => {
-    const { setCartList } = useContext(CartListContext);
+    const { cartList, setCartList } = useContext(CartListContext);
     const productTitle = product[0];
     const productPrice = parseInt(product[1].price);
     const productAmount = product[1].amount;
@@ -17,12 +17,14 @@ const CartProduct = ({ product }) => {
                 setCartList(products => {
                     products[productTitle].amount--;
                     if (products[productTitle].amount === 0) delete products[productTitle];
+                    sessionStorage.setItem('cart', JSON.stringify({ ...products }));
                     return { ...products };
                 })
                 break;
             case '+':
                 setCartList(products => {
                     products[productTitle].amount++;
+                    sessionStorage.setItem('cart', JSON.stringify({ ...products }));
                     return { ...products };
                 })
                 break;

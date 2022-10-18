@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CartListContext } from '../../ctx/CartListContext';
 import { useContext } from 'react';
 import CartProduct from './CartProduct/CartProduct';
@@ -16,7 +16,7 @@ const CartPopUp = ({ setIsCartOpen }) => {
     };
 
     return (
-        <div style={{ position: 'absolute', width: '35%', height: 'auto', top: '35%', left: '35%', padding: '0 15px', backgroundColor: '#aaa' }}>
+        <div style={{ position: 'absolute', width: '35%', height: 'auto', top: '35%', left: '35%', padding: '5px 15px', backgroundColor: '#aaa' }}>
             {cartListToArray && extractAddedToCartProducts()}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h2>Total Amount</h2>

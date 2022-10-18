@@ -2,14 +2,19 @@ import { CartListContext } from "../../../ctx/CartListContext";
 import { useContext } from "react";
 
 const HomepageProduct = ({ product }) => {
-    const { setCartList } = useContext(CartListContext);
+    const { cartList, setCartList } = useContext(CartListContext);
     const newProduct = product.title;
     const addedProduct = {}
     addedProduct[newProduct] = { price: product.price, amount: 1 };
 
     const addProductToCartList = () => {
         setCartList(prevProducts => {
-            return Object.keys(prevProducts).length === 0 ? addedProduct : { ...prevProducts, ...addedProduct };
+            if (Object.keys(prevProducts).length === 0) {
+                sessionStorage.setItem('cart', JSON.stringify(addedProduct));
+                return addedProduct;
+            }
+            sessionStorage.setItem('cart', JSON.stringify({ ...prevProducts, ...addedProduct }));
+            return { ...prevProducts, ...addedProduct };
         });
     };
 

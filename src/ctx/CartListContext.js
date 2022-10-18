@@ -12,7 +12,11 @@ export const CartListContextProvider = ({ children }) => {
 
     useEffect(() => {
         setTotalPrice(calculateTotalPrice());
-    }, [cartList])
+    }, [cartList]);
+
+    useEffect(() => {
+        if(sessionStorage.getItem('cart')) setCartList(JSON.parse(sessionStorage.getItem('cart')));
+    }, []);
 
     return (
         <CartListContext.Provider value={{ cartList, setCartList, totalPrice, setTotalPrice }}>
