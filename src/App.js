@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import { LoggedContextProvider } from './ctx/LoggedContext';
 import { CartListContextProvider } from './ctx/CartListContext';
 import CartPopUp from './components/CartPopUp/CartPopUp';
+import Checkout from './components/Checkout/Checkout';
 
 function App() {
   const [userList, setUserList] = useState([]);
@@ -63,6 +64,9 @@ function App() {
               </Route>
               <Route path="/dashboard">
                 <Dashboard setTotalProducts={setTotalProducts} />
+              </Route>
+              <Route path="/checkout">
+                <Checkout setIsCartOpen={setIsCartOpen} />
               </Route>
             </Switch>
           </main>

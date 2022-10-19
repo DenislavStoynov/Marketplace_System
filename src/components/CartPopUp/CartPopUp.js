@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { CartListContext } from '../../ctx/CartListContext';
 import { useContext } from 'react';
 import CartProduct from './CartProduct/CartProduct';
+import { Link } from 'react-router-dom';
 
 const CartPopUp = ({ setIsCartOpen }) => {
     const { cartList, totalPrice } = useContext(CartListContext);
@@ -24,7 +25,7 @@ const CartPopUp = ({ setIsCartOpen }) => {
             </div>
             <div style={{ float: 'right' }}>
                 <button onClick={closeCartPopUp}>Close</button>
-                <button>Order</button>
+                <Link to='/checkout'><button>Checkout</button></Link>
             </div>
         </div>
     )
