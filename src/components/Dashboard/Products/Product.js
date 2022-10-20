@@ -8,7 +8,7 @@ const selectButtonStyles = {
     cursor: 'pointer'
 };
 
-const Product = ({ product, setProducts, products, setPopUpIsVisible, setProductToDelete, localKey }) => {
+const Product = ({ product, setProducts, products, setPopUpIsVisible, setProductToDelete, localKey, user }) => {
     const key = getKeyByValue(products, product);
     const openPopUp = () => {
         setPopUpIsVisible(true);
@@ -37,7 +37,9 @@ const Product = ({ product, setProducts, products, setPopUpIsVisible, setProduct
                     title: product.title,
                     description: product.description,
                     price: product.price,
-                    images: reader.result
+                    images: reader.result,
+                    sellerKey: localKey,
+                    seller: user.username
                 })
             });
             updateProducts(reader.result);

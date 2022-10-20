@@ -2,10 +2,10 @@ import { CartListContext } from "../../../ctx/CartListContext";
 import { useContext } from "react";
 
 const HomepageProduct = ({ product }) => {
-    const { cartList, setCartList } = useContext(CartListContext);
+    const { setCartList } = useContext(CartListContext);
     const newProduct = product.title;
     const addedProduct = {}
-    addedProduct[newProduct] = { price: product.price, amount: 1 };
+    addedProduct[newProduct] = { price: product.price, amount: 1, sellerKey: product.sellerKey };
 
     const addProductToCartList = () => {
         setCartList(prevProducts => {
@@ -24,6 +24,7 @@ const HomepageProduct = ({ product }) => {
             <h3>{product.title}</h3>
             <p>{product.description}</p>
             <p>{product.price}$</p>
+            <p style={{fontStyle: 'italic'}}>By {product.seller}</p>
             <button onClick={addProductToCartList}>Add To Cart</button>
         </div>
     )

@@ -54,13 +54,17 @@ const Dashboard = ({ setTotalProducts }) => {
                     title: productTitle.current.value,
                     description: productDescription.current.value,
                     price: productPrice.current.value,
-                    images: false
+                    images: false,
+                    sellerKey: key,
+                    seller: user.username
                 }] : [...products, {
                     id: Math.random(),
                     title: productTitle.current.value,
                     description: productDescription.current.value,
                     price: productPrice.current.value,
-                    images: false
+                    images: false,
+                    sellerKey: key,
+                    seller: user.username
                 }]
             })
         });
@@ -71,7 +75,7 @@ const Dashboard = ({ setTotalProducts }) => {
 
     const extractProducts = () => {
         return products
-            .map(product => <Product key={Math.random()} product={product} setProducts={setProducts} products={products} setPopUpIsVisible={setPopUpIsVisible} setProductToDelete={setProductToDelete} localKey={key} />);
+            .map(product => <Product key={Math.random()} product={product} setProducts={setProducts} products={products} setPopUpIsVisible={setPopUpIsVisible} setProductToDelete={setProductToDelete} localKey={key} user={user} />);
     };
 
     return (
